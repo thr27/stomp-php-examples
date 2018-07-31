@@ -23,9 +23,11 @@ use Stomp\StatefulStomp;
 use Stomp\Transport\Message;
 
 // make a connection
-$stomp = new StatefulStomp(
-    new Client('failover://(tcp://localhost:61614,ssl://localhost:61612,tcp://localhost:61613)?randomize=false')
-);
+$client =new Client('failover://(ssl://dev36.inhouse.fti-ticketshop.de:5674,tcp://dev36.inhouse.fti-ticketshop.de:5673)?randomize=false');
+$client->setLogin('stomp', 'stomp1234');
+$client->setVhostname('/');
+
+$stomp = new StatefulStomp($client);
 
 // send a message to the queue
 $stomp->send('/queue/test', new Message('test'));
